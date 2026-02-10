@@ -167,8 +167,8 @@ const FreelancerDiscovery: React.FC<FreelancerDiscoveryProps> = ({ activeJob, on
 
               <div className="mt-auto flex items-center justify-between pt-2">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-lg font-bold text-black">₹{freelancer.hourlyRate}</span>
-                  <span className="text-xs text-gray-500">/hr</span>
+                  <span className="text-xl font-bold text-green-400 font-mono tracking-wide">₹{freelancer.hourlyRate.toLocaleString()}</span>
+                  <span className="text-xs text-gray-500 font-medium">/hr</span>
                 </div>
                 <Button size="sm" variant="outline" className="hover:bg-black hover:text-white transition-colors" onClick={() => onHire(freelancer)}>
                   Hire Now
