@@ -14,7 +14,8 @@ import {
   Wallet,
   HelpCircle,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  User
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { UserRole, UserProfile } from '../types';
@@ -66,6 +67,7 @@ const Layout: React.FC<LayoutProps> = ({ children, onLogout, userProfile }) => {
         <nav className="flex-1 py-6 space-y-1 overflow-y-auto custom-scrollbar">
           <div className="px-4 pb-2 text-[10px] font-bold text-gray-600 uppercase tracking-[0.2em] font-display">Main Module</div>
           <NavItem to="/dashboard" icon={<LayoutDashboard size={18} />} label={t('dashboard')} />
+          <NavItem to="/profile" icon={<User size={18} />} label="My Profile" />
 
           {userProfile?.role === 'client' && (
             <>
@@ -89,7 +91,10 @@ const Layout: React.FC<LayoutProps> = ({ children, onLogout, userProfile }) => {
         </nav>
 
         <div className="p-4 border-t border-white/10 bg-black/40">
-          <div className="flex items-center gap-3 mb-4 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer border border-transparent hover:border-white/10">
+          <div
+            onClick={() => navigate('/profile')}
+            className="flex items-center gap-3 mb-4 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer border border-transparent hover:border-white/10"
+          >
             <div className="w-8 h-8 rounded-sm bg-gradient-to-br from-gray-700 to-black text-white flex items-center justify-center font-bold text-xs border border-gray-500 shadow-glow-sm">
               {userProfile?.displayName ? userProfile.displayName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'JD'}
             </div>

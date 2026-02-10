@@ -5,6 +5,7 @@ import LandingPage from './components/LandingPage';
 import AuthPage from './components/AuthPage';
 import Dashboard from './components/Dashboard';
 import AdminPage from './components/AdminPage';
+import ProfilePage from './components/ProfilePage';
 import JobPostForm from './components/JobPostForm';
 import FreelancerDiscovery from './components/FreelancerDiscovery';
 import EscrowPaymentCard from './components/EscrowPaymentCard';
@@ -166,7 +167,8 @@ const AppContent: React.FC = () => {
 
         {/* Protected App Routes - Passing userRole to Layout to customize sidebar */}
         <Route path="/dashboard" element={<ProtectedRoute><Layout userProfile={userProfile} onLogout={handleLogout}><Dashboard userRole={userProfile?.role || 'client'} /></Layout></ProtectedRoute>} />
-        <Route path="/post-job" element={<ProtectedRoute><Layout userProfile={userProfile} onLogout={handleLogout}><JobPostForm onSubmit={handleJobSubmit} /></Layout></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Layout userProfile={userProfile} onLogout={handleLogout}><ProfilePage userProfile={userProfile} /></Layout></ProtectedRoute>} />
+        <Route path="/post-job" element={<ProtectedRoute><Layout userProfile={userProfile} onLogout={handleLogout}><JobPostForm /></Layout></ProtectedRoute>} />
         <Route
           path="/find-talent"
           element={

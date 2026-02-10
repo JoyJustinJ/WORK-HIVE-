@@ -6,6 +6,13 @@ export interface UserProfile {
   email: string;
   role: UserRole;
   createdAt: string;
+  // Extended Profile Fields
+  bio?: string;
+  location?: string;
+  skills?: string[]; // For freelancers
+  companyName?: string; // For clients
+  website?: string;
+  avatarUrl?: string;
 }
 
 export interface Freelancer {
