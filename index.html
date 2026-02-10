@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work Hive - Premium Talent Ecosystem</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            hive: {
+              black: '#050505', // Deep space black
+              dark: '#0a0a0a',
+              glass: 'rgba(255, 255, 255, 0.05)',
+              silver: '#e4e4e7',
+              glow: '#ffffff',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Orbitron', 'sans-serif'], // Futuristic font
+          },
+          backgroundImage: {
+            'space-gradient': 'radial-gradient(circle at center, #1a1a1a 0%, #000000 100%)',
+          },
+          boxShadow: {
+            'glow': '0 0 20px rgba(255, 255, 255, 0.15)',
+            'glow-sm': '0 0 10px rgba(255, 255, 255, 0.1)',
+          },
+          animation: {
+            'spin-slow': 'spin 60s linear infinite',
+            'spin-reverse-slow': 'spinReverse 40s linear infinite',
+          },
+          keyframes: {
+            spinReverse: {
+              'from': { transform: 'rotate(360deg)' },
+              'to': { transform: 'rotate(0deg)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;900&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      background-color: #000000;
+      color: #e4e4e7;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  </style>
+  <link rel="stylesheet" href="/index.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
