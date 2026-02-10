@@ -20,7 +20,7 @@ import Chatbot from './components/Chatbot';
 import { LanguageProvider } from './context/LanguageContext';
 import { Job, Freelancer, UserRole, UserProfile } from './types';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { auth, db } from './firebaseConfig';
 
 // State management wrapper
@@ -33,24 +33,47 @@ const AppContent: React.FC = () => {
   const [paymentStep, setPaymentStep] = useState<{ freelancer: Freelancer, amount: number } | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        // Fetch role from Firestore
-        const docRef = doc(db, "hive_profiles", user.uid);
-        const docSnap = await getDoc(docRef);
+    let profileUnsubscribe: (() => void) | null = null;
 
-        if (docSnap.exists()) {
-          setUserProfile(docSnap.data() as UserProfile);
-        }
-        setIsAuthenticated(true);
+    const authUnsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Subscribe to real-time profile updates
+        const docRef = doc(db, "hive_profiles", user.uid);
+
+        // Unsubscribe from previous listener if exists (rare case but safe)
+        if (profileUnsubscribe) profileUnsubscribe();
+
+        profileUnsubscribe = onSnapshot(docRef, (docSnap) => {
+          if (docSnap.exists()) {
+            setUserProfile(docSnap.data() as UserProfile);
+          } else {
+            console.log(">>> [APP DEBUG] Profile not found yet (might be creating...)");
+          }
+          // We set authenticated even if profile is loading to allow UI to show up
+          // Layout handles missing profile gracefully (as Guest) untill it loads
+          setIsAuthenticated(true);
+          setLoading(false);
+        }, (error) => {
+          console.error(">>> [APP DEBUG] Profile sync error:", error);
+          setLoading(false);
+        });
+
       } else {
+        // User logged out
+        if (profileUnsubscribe) {
+          profileUnsubscribe();
+          profileUnsubscribe = null;
+        }
         setIsAuthenticated(false);
         setUserProfile(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      authUnsubscribe();
+      if (profileUnsubscribe) profileUnsubscribe();
+    };
   }, []);
 
   const handleLogin = (role: UserRole) => {
