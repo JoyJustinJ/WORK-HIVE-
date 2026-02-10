@@ -20,6 +20,7 @@ import Card from './ui/Card';
 const AdminPage: React.FC = () => {
     const navigate = useNavigate();
     const [users, setUsers] = useState<UserProfile[]>([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
     const [stats, setStats] = useState({
         total: 0,
@@ -172,6 +173,8 @@ const AdminPage: React.FC = () => {
                                 <Search className="absolute left-3 top-2.5 text-gray-500" size={16} />
                                 <input
                                     type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
                                     placeholder="Search users..."
                                     className="bg-white/5 border border-white/10 rounded-lg py-2 pl-10 pr-4 text-sm text-gray-300 focus:outline-none focus:border-white/30 w-64"
                                 />
@@ -194,7 +197,10 @@ const AdminPage: React.FC = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-white/5">
-                                {users.map((user) => (
+                                {users.filter(user =>
+                                    user.displayName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                    user.email.toLowerCase().includes(searchQuery.toLowerCase())
+                                ).map((user) => (
                                     <tr key={user.uid} className="hover:bg-white/5 transition-colors group">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
@@ -209,10 +215,10 @@ const AdminPage: React.FC = () => {
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border ${user.role === 'client'
-                                                    ? 'bg-amber-500/10 text-amber-500 border-amber-500/20'
-                                                    : user.role === 'admin'
-                                                        ? 'bg-red-500/10 text-red-500 border-red-500/20'
-                                                        : 'bg-purple-500/10 text-purple-500 border-purple-500/20'
+                                                ? 'bg-amber-500/10 text-amber-500 border-amber-500/20'
+                                                : user.role === 'admin'
+                                                    ? 'bg-red-500/10 text-red-500 border-red-500/20'
+                                                    : 'bg-purple-500/10 text-purple-500 border-purple-500/20'
                                                 }`}>
                                                 {user.role}
                                             </span>
