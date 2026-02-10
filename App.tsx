@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import LandingPage from './components/LandingPage';
 import AuthPage from './components/AuthPage';
 import Dashboard from './components/Dashboard';
+import AdminPage from './components/AdminPage';
 import JobPostForm from './components/JobPostForm';
 import FreelancerDiscovery from './components/FreelancerDiscovery';
 import EscrowPaymentCard from './components/EscrowPaymentCard';
@@ -31,6 +32,7 @@ const AppContent: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [activeJob, setActiveJob] = useState<Job | null>(null);
   const [paymentStep, setPaymentStep] = useState<{ freelancer: Freelancer, amount: number } | null>(null);
+  const isAdminRef = React.useRef(false); // Ref to track admin session across renders avoids Firebase auth overrides
 
   useEffect(() => {
     let profileUnsubscribe: (() => void) | null = null;
@@ -64,8 +66,12 @@ const AppContent: React.FC = () => {
           profileUnsubscribe();
           profileUnsubscribe = null;
         }
-        setIsAuthenticated(false);
-        setUserProfile(null);
+
+        // Only set unauthenticated if NOT in a special admin session
+        if (!isAdminRef.current) {
+          setIsAuthenticated(false);
+          setUserProfile(null);
+        }
         setLoading(false);
       }
     });
@@ -79,12 +85,18 @@ const AppContent: React.FC = () => {
   const handleLogin = (role: UserRole) => {
     // Note: UserProfile will be set by the useEffect listener
     setIsAuthenticated(true);
-    navigate('/dashboard');
+    if (role === 'admin') {
+      isAdminRef.current = true;
+      navigate('/admin');
+    } else {
+      navigate('/dashboard');
+    }
   };
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      isAdminRef.current = false;
       setIsAuthenticated(false);
       navigate('/');
     } catch (err) {
@@ -170,6 +182,7 @@ const AppContent: React.FC = () => {
         <Route path="/contracts" element={<ProtectedRoute><Layout userProfile={userProfile} onLogout={handleLogout}><ContractsPage /></Layout></ProtectedRoute>} />
         <Route path="/messages" element={<ProtectedRoute><Layout userProfile={userProfile} onLogout={handleLogout}><MessagesPage /></Layout></ProtectedRoute>} />
         <Route path="/support" element={<ProtectedRoute><Layout userProfile={userProfile} onLogout={handleLogout}><SupportPage /></Layout></ProtectedRoute>} />
+        <Route path="/admin" element={isAuthenticated ? <AdminPage /> : <Navigate to="/auth" replace />} />
       </Routes>
       <Chatbot />
     </>

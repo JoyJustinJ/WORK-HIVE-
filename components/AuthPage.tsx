@@ -29,6 +29,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
     // Form states
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [securityKey, setSecurityKey] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [fullName, setFullName] = useState('');
 
@@ -70,6 +71,21 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
 
         try {
             if (isLogin) {
+                if (loginMethod === 'key') {
+                    // --- ADMIN LOGIN LOGIC ---
+                    console.log(">>> [AUTH DEBUG] Checking Security Key...");
+                    // Hardcoded Admin Key for Prototype
+                    const ADMIN_KEY = "wh_admin_secure_key_2025";
+
+                    if (securityKey === ADMIN_KEY) {
+                        console.log(">>> [AUTH DEBUG] Admin Key Verified!");
+                        onLogin('admin');
+                        return;
+                    } else {
+                        throw new Error("Invalid Security Key.");
+                    }
+                }
+
                 // Log In
                 console.log(">>> [AUTH DEBUG] Attempting Firebase Login with email:", email);
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -287,6 +303,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
                                 <Key className="absolute left-3 top-3 text-gray-500 group-focus-within:text-white transition-colors" size={18} />
                                 <input
                                     type="password"
+                                    value={securityKey}
+                                    onChange={(e) => setSecurityKey(e.target.value)}
                                     className="w-full bg-black/50 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-sm text-white focus:border-white/50 focus:bg-black/80 outline-none transition-all placeholder-gray-600 font-mono tracking-wider"
                                     placeholder="wh_live_8392..."
                                     required
