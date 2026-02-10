@@ -1,7 +1,7 @@
-{
   "name": "work-hive",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://JoyJustinJ.github.io/WORK-HIVE-/",
   "type": "module",
   "scripts": {
     "dev": "vite",
