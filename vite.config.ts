@@ -18,6 +18,5 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, '.'),
       }
     },
-    base: '/WORK-HIVE-/',
   };
 });
