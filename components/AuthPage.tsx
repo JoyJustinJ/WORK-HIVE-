@@ -323,22 +323,26 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
                     </Button>
                 </form>
 
-                <div className="mt-6 flex items-center gap-4 text-xs text-gray-500">
-                    <div className="h-px bg-white/10 flex-1"></div>
-                    <span className="tracking-widest">OR CONTINUE WITH</span>
-                    <div className="h-px bg-white/10 flex-1"></div>
-                </div>
+                {loginMethod === 'password' && (
+                    <>
+                        <div className="mt-6 flex items-center gap-4 text-xs text-gray-500">
+                            <div className="h-px bg-white/10 flex-1"></div>
+                            <span className="tracking-widest">OR CONTINUE WITH</span>
+                            <div className="h-px bg-white/10 flex-1"></div>
+                        </div>
 
-                <div className="flex gap-4 mt-6">
-                    <button onClick={() => handleSocialAuth(githubProvider)} className="flex-1 py-2.5 border border-white/10 rounded-lg flex items-center justify-center gap-2 hover:bg-white hover:text-black transition-all duration-300 group">
-                        <Github size={18} className="group-hover:scale-110 transition-transform" />
-                        <span className="text-xs font-bold uppercase tracking-wider">GitHub</span>
-                    </button>
-                    <button onClick={() => handleSocialAuth(googleProvider)} className="flex-1 py-2.5 border border-white/10 rounded-lg flex items-center justify-center gap-2 hover:bg-white hover:text-black transition-all duration-300 group">
-                        <Chrome size={18} className="group-hover:scale-110 transition-transform" />
-                        <span className="text-xs font-bold uppercase tracking-wider">Google</span>
-                    </button>
-                </div>
+                        <div className="flex gap-4 mt-6">
+                            <button onClick={() => handleSocialAuth(githubProvider)} className="flex-1 py-2.5 border border-white/10 rounded-lg flex items-center justify-center gap-2 hover:bg-white hover:text-black transition-all duration-300 group">
+                                <Github size={18} className="group-hover:scale-110 transition-transform" />
+                                <span className="text-xs font-bold uppercase tracking-wider">GitHub</span>
+                            </button>
+                            <button onClick={() => handleSocialAuth(googleProvider)} className="flex-1 py-2.5 border border-white/10 rounded-lg flex items-center justify-center gap-2 hover:bg-white hover:text-black transition-all duration-300 group">
+                                <Chrome size={18} className="group-hover:scale-110 transition-transform" />
+                                <span className="text-xs font-bold uppercase tracking-wider">Google</span>
+                            </button>
+                        </div>
+                    </>
+                )}
 
                 <p className="mt-8 text-center text-xs text-gray-400">
                     {isLogin ? "Don't have an account? " : "Already have an account? "}
