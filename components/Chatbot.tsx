@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Bot, User, Loader2, Sparkles } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
+const GEMINI_API_KEY = "AIzaSyBOQW68qolbzBHcbjdOsthFjrQLeeov4B0";
 
 const Chatbot: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
