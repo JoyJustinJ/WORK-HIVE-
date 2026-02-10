@@ -34,16 +34,24 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
 
     const handleAuthError = (err: any) => {
         console.error("Auth Error:", err);
-        let message = "An error occurred during authentication.";
-        if (err.code === 'auth/user-not-found') message = "No account found with this email.";
-        else if (err.code === 'auth/wrong-password') message = "Incorrect password.";
-        else if (err.code === 'auth/email-already-in-use') message = "Email already in use.";
-        else if (err.code === 'auth/invalid-credential') message = "Invalid credentials. Please check your config.";
-        else if (err.code === 'auth/operation-not-allowed') message = "This login method is disabled in Firebase Console.";
-        else if (err.code === 'auth/unauthorized-domain') message = "This domain is not authorized in Firebase Console.";
-        else if (err.code === 'auth/popup-closed-by-user') message = "Login popup was closed before completion.";
-        else if (err.code === 'auth/popup-blocked') message = "Login popup was blocked by your browser.";
-        else if (err.message) message = err.message; // Fallback to raw message if available
+        let message = "Something went wrong. Please try again.";
+
+        if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+            message = "Incorrect email or password. Please try again.";
+        } else if (err.code === 'auth/email-already-in-use') {
+            message = "This email is already registered. Please log in instead.";
+        } else if (err.code === 'auth/operation-not-allowed') {
+            message = "This login method is currently unavailable. Please contact support.";
+        } else if (err.code === 'auth/unauthorized-domain') {
+            message = "Access from this domain is restricted for security reasons.";
+        } else if (err.code === 'auth/popup-closed-by-user') {
+            message = "Sign in was cancelled.";
+        } else if (err.code === 'auth/popup-blocked') {
+            message = "Sign in popup was blocked by your browser. Please allow popups for this site.";
+        } else if (err.code === 'auth/network-request-failed') {
+            message = "Network error. Please check your internet connection.";
+        }
+
         setError(message);
     };
 
