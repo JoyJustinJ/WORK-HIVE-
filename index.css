@@ -7,13 +7,39 @@ html {
    * - Maximum: 20px (Large screens)
    * This effectively scales all rem-based units (Tailwind classes) proportionally.
    */
-    /* Default (Fluid Scaling) */
-    /* 
-       This formula scales the base font size smoothly from 14px on mobile 
-       to ~16px on laptops (1366px) and ~18px on desktops (1920px).
-       It avoids the "step" jump effect of media queries.
-    */
-    font-size: clamp(14px, 0.36vw + 11px, 24px);
+    /* Default (Mobile) - Compact */
+    font-size: 14px;
+}
+
+/* Tablet (Medium Screens) */
+@media (min-width: 768px) {
+    html {
+        font-size: 14.5px;
+        /* Subtle increase */
+    }
+}
+
+/* Laptop (Most Common) */
+@media (min-width: 1024px) {
+    html {
+        font-size: 15px;
+        /* Reduced from 16px for better fit */
+    }
+}
+
+/* large Desktop */
+@media (min-width: 1440px) {
+    html {
+        font-size: 16px;
+        /* Reduced from 18px */
+    }
+}
+
+/* Ultra Wide */
+@media (min-width: 1920px) {
+    html {
+        font-size: 18px;
+    }
 }
 
 /* Global scroll behavior */
