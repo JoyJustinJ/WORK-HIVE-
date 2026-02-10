@@ -51,6 +51,9 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
             message = "Sign in popup was blocked by your browser. Please allow popups for this site.";
         } else if (err.code === 'auth/network-request-failed') {
             message = "Network error. Please check your internet connection.";
+        } else if (err.message) {
+            // Fallback for custom errors (like "Invalid Security Key")
+            message = err.message;
         }
 
         setError(message);
