@@ -26,7 +26,7 @@ interface RazorpayOptions {
     };
 }
 
-const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_YOUR_KEY_HERE'; // Placeholder
+const RAZORPAY_KEY_ID = "rzp_test_SEFzdaxLQK5J0r";
 
 export const openPaymentModal = (
     amount: number,

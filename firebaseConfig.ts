@@ -31,13 +31,14 @@ import { getFirestore } from "firebase/firestore";
 
 // Replace these with actual config from Firebase Console
 // Replace these with actual config from Firebase Console
+// Replace these with actual config from Firebase Console
 export const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey: "AIzaSyDodgydp6jEGgW11sqQ-fFfWRbce-TW9Mk",
+  authDomain: "work-hive-v2-dev-99.firebaseapp.com",
+  projectId: "work-hive-v2-dev-99",
+  storageBucket: "work-hive-v2-dev-99.firebasestorage.app",
+  messagingSenderId: "202063207041",
+  appId: "1:202063207041:web:e67733bc3d6b8fc67d8b80"
 };
 
 // Initialize Firebase
