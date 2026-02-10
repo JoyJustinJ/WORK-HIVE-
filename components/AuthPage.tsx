@@ -39,6 +39,11 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
         else if (err.code === 'auth/wrong-password') message = "Incorrect password.";
         else if (err.code === 'auth/email-already-in-use') message = "Email already in use.";
         else if (err.code === 'auth/invalid-credential') message = "Invalid credentials. Please check your config.";
+        else if (err.code === 'auth/operation-not-allowed') message = "This login method is disabled in Firebase Console.";
+        else if (err.code === 'auth/unauthorized-domain') message = "This domain is not authorized in Firebase Console.";
+        else if (err.code === 'auth/popup-closed-by-user') message = "Login popup was closed before completion.";
+        else if (err.code === 'auth/popup-blocked') message = "Login popup was blocked by your browser.";
+        else if (err.message) message = err.message; // Fallback to raw message if available
         setError(message);
     };
 
