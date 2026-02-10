@@ -1,0 +1,36 @@
+/* Global Responsive Scaling */
+html {
+  /* 
+   * Base font size scales with viewport width.
+   * - Minimum: 14px (Phone)
+   * - Ideal: 1vw (Desktop scaling)
+   * - Maximum: 20px (Large screens)
+   * This effectively scales all rem-based units (Tailwind classes) proportionally.
+   */
+  font-size: clamp(14px, 0.9vw + 4px, 20px);
+  scroll-behavior: smooth;
+}
+
+body {
+  /* Ensure full height and prevent horizontal overflow */
+  min-height: 100vh;
+  overflow-x: hidden;
+  /* Reset margin/padding just in case */
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom Scrollbar Styles (moved from index.html if desired, or kept here) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050505; 
+}
+::-webkit-scrollbar-thumb {
+  background: #333; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
