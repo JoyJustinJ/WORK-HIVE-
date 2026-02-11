@@ -35,25 +35,26 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
 
     const handleAuthError = (err: any) => {
         console.error("Auth Error Full Object:", err);
-        let message = "Something went wrong. Please try again.";
+        let message = "Authentication failed. Please try again.";
 
         if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
-            message = "Incorrect email or password. Please try again.";
+            message = "Incorrect credentials. Access denied.";
         } else if (err.code === 'auth/email-already-in-use') {
-            message = "This email is already registered. Please log in instead.";
+            message = "This identity is already registered. Please log in.";
         } else if (err.code === 'auth/operation-not-allowed') {
-            message = "This login method is currently unavailable. Please contact support.";
+            message = "Operation not permitted. Contact support.";
         } else if (err.code === 'auth/unauthorized-domain') {
-            message = `Access from this domain (${window.location.hostname}) is restricted for security reasons. Please add this domain to your Firebase Console > Authentication > Settings > Authorized Domains.`;
-        } else if (err.code === 'auth/popup-closed-by-user') {
-            message = "Sign in was cancelled.";
+            message = `Domain restricted (${window.location.hostname}). Authorization required in console.`;
+        } else if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
+            message = "Authentication process cancelled.";
         } else if (err.code === 'auth/popup-blocked') {
-            message = "Sign in popup was blocked by your browser. Please allow popups for this site.";
+            message = "Popup blocked. Please allow popups to proceed.";
         } else if (err.code === 'auth/network-request-failed') {
-            message = "Network error. Please check your internet connection.";
+            message = "Connection lost. Check your network.";
         } else if (err.message) {
-            // Fallback for custom errors (like "Invalid Security Key")
-            message = err.message;
+            // Fallback for custom errors (avoid showing raw Firebase errors)
+            const rawMsg = err.message.replace("Firebase: ", "").replace(/\(auth\/.*\)\.?/, "").trim();
+            message = rawMsg.charAt(0).toUpperCase() + rawMsg.slice(1);
         }
 
         setError(message);
@@ -194,9 +195,9 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
                 </p>
 
                 {error && (
-                    <div className="mb-6 p-3 bg-red-500/10 border border-red-500/50 rounded-lg flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
+                    <div className="mb-6 p-4 bg-red-500/5 border border-red-500/50 rounded-lg flex items-center gap-3 animate-in fade-in slide-in-from-top-2 backdrop-blur-sm">
                         <AlertCircle className="text-red-500 shrink-0" size={18} />
-                        <p className="text-xs text-red-200">{error}</p>
+                        <p className="text-xs font-mono text-red-100 tracking-wide">{error}</p>
                     </div>
                 )}
 
