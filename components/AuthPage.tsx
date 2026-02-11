@@ -34,7 +34,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
     const [fullName, setFullName] = useState('');
 
     const handleAuthError = (err: any) => {
-        console.error("Auth Error:", err);
+        console.error("Auth Error Full Object:", err);
         let message = "Something went wrong. Please try again.";
 
         if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
@@ -44,7 +44,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onBack }) => {
         } else if (err.code === 'auth/operation-not-allowed') {
             message = "This login method is currently unavailable. Please contact support.";
         } else if (err.code === 'auth/unauthorized-domain') {
-            message = "Access from this domain is restricted for security reasons.";
+            message = `Access from this domain (${window.location.hostname}) is restricted for security reasons. Please add this domain to your Firebase Console > Authentication > Settings > Authorized Domains.`;
         } else if (err.code === 'auth/popup-closed-by-user') {
             message = "Sign in was cancelled.";
         } else if (err.code === 'auth/popup-blocked') {
